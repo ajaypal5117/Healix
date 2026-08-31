@@ -1,0 +1,317 @@
+/* Healix — a reading surface first, a chat app second.
+   Answers are set in a serif at encyclopedia measure; the interface chrome
+   stays in a quiet sans so it never competes with the text. */
+
+:root {
+  --paper:      #FCFCFA;
+  --ink:        #14212B;
+  --slate:      #5C6B75;
+  --teal:       #106E62;
+  --rule:       #E0E4E0;
+  --rule-soft:  #EFF1EE;
+  --flag:       #8A5B1F;
+
+  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --sans:  "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --measure: 34rem;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Masthead ---------- */
+
+.masthead {
+  border-bottom: 1px solid var(--rule);
+  padding: 1.5rem 0 1.25rem;
+}
+
+.masthead-inner {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.wordmark {
+  font-family: var(--serif);
+  font-size: 1.65rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin: 0 0 0.2rem;
+}
+
+.masthead-sub {
+  margin: 0;
+  max-width: 22rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--slate);
+}
+
+.corpus-stats {
+  display: flex;
+  gap: 1.75rem;
+  margin: 0;
+}
+
+.corpus-stats div { margin: 0; }
+
+.corpus-stats dt {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--slate);
+  margin-bottom: 0.15rem;
+}
+
+.corpus-stats dd {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Transcript ---------- */
+
+main { flex: 1 0 auto; }
+
+.transcript {
+  padding: 2.25rem 0 1rem;
+  max-width: var(--measure);
+}
+
+.empty-lead {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  line-height: 1.55;
+  color: var(--slate);
+  margin: 0 0 1.5rem;
+}
+
+.starters {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.45rem;
+}
+
+.starter {
+  border: 0;
+  background: none;
+  padding: 0.15rem 0;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  color: var(--teal);
+  border-bottom: 1px solid var(--rule);
+  cursor: pointer;
+  text-align: left;
+}
+
+.starter:hover,
+.starter:focus-visible { border-bottom-color: var(--teal); }
+
+.turn { margin-bottom: 2.25rem; }
+
+.turn-question {
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.5;
+  margin: 0 0 0.85rem;
+}
+
+.turn-answer {
+  font-family: var(--serif);
+  font-size: 1.075rem;
+  line-height: 1.65;
+  margin: 0;
+  padding-left: 1rem;
+  border-left: 2px solid var(--teal);
+}
+
+.turn-answer.is-error {
+  border-left-color: var(--flag);
+  color: var(--flag);
+  font-family: var(--sans);
+  font-size: 0.95rem;
+}
+
+/* Citations read like an encyclopedia's marginal index entries. */
+.citations {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding-left: 1rem;
+  border-top: 1px solid var(--rule-soft);
+  padding-top: 0.75rem;
+}
+
+.citation {
+  display: grid;
+  grid-template-columns: 3.25rem 1fr;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--slate);
+  padding: 0.3rem 0;
+}
+
+.citation-page {
+  font-family: var(--serif);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.timing {
+  margin: 0.65rem 0 0;
+  padding-left: 1rem;
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--slate);
+}
+
+/* Waiting indicator: three dots that fill in sequence. */
+.thinking {
+  padding-left: 1rem;
+  border-left: 2px solid var(--rule);
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  height: 1.75rem;
+}
+
+.thinking span {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--slate);
+  opacity: 0.25;
+  animation: pulse 1.1s infinite;
+}
+
+.thinking span:nth-child(2) { animation-delay: 0.16s; }
+.thinking span:nth-child(3) { animation-delay: 0.32s; }
+
+@keyframes pulse {
+  0%, 60%, 100% { opacity: 0.25; }
+  30%           { opacity: 0.9; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thinking span { animation: none; opacity: 0.5; }
+}
+
+/* ---------- Composer ---------- */
+
+.composer-shell {
+  position: sticky;
+  bottom: 0;
+  background: var(--paper);
+  border-top: 1px solid var(--rule);
+  padding: 1rem 0 1.15rem;
+}
+
+.composer {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+  max-width: var(--measure);
+}
+
+#question {
+  flex: 1;
+  resize: none;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  background: #fff;
+  padding: 0.65rem 0.75rem;
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--ink);
+  max-height: 8rem;
+}
+
+#question:focus {
+  outline: none;
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(16, 110, 98, 0.12);
+}
+
+.send {
+  border: 0;
+  border-radius: 3px;
+  background: var(--teal);
+  color: #fff;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.7rem 1.2rem;
+  cursor: pointer;
+}
+
+.send:hover { background: #0C5A50; }
+
+.send:disabled {
+  background: var(--rule);
+  color: var(--slate);
+  cursor: not-allowed;
+}
+
+.send:focus-visible,
+.starter:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+.composer-note {
+  max-width: var(--measure);
+  margin: 0.6rem 0 0;
+  font-size: 0.73rem;
+  line-height: 1.45;
+  color: var(--slate);
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 640px) {
+  .masthead-inner { align-items: flex-start; gap: 1.1rem; }
+  .corpus-stats { gap: 1.25rem; }
+  .transcript { padding-top: 1.5rem; }
+  .turn-answer { font-size: 1.02rem; }
+  .citation { grid-template-columns: 2.75rem 1fr; }
+}

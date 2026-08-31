@@ -1,0 +1,37 @@
+# Secrets
+.env
+*.pem
+
+# Built index and model cache
+artifacts/
+.cache/
+*.faiss
+*.pkl
+
+# Corpus PDFs (large; see data/README.md)
+data/*.pdf
+data/*.PDF
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

@@ -30,7 +30,10 @@ jobs:
   build-and-push:
     name: build image and push to ECR
     needs: test
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    # Only runs where AWS is configured. Without the secrets the deploy path
+    # is skipped rather than failing the run - the pipeline is defined, it just
+    # has nowhere to deploy to.
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && vars.DEPLOY_ENABLED == 'true'
     runs-on: ubuntu-latest
     outputs:
       image: ${{ steps.build.outputs.image }}
@@ -62,6 +65,7 @@ jobs:
   deploy:
     name: roll out to EC2
     needs: build-and-push
+    if: vars.DEPLOY_ENABLED == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: pull and restart the container

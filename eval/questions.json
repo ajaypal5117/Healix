@@ -1,0 +1,21 @@
+[
+  {"question": "What causes iron deficiency anaemia?", "in_corpus": true},
+  {"question": "How is type 2 diabetes diagnosed?", "in_corpus": true},
+  {"question": "What are the symptoms of appendicitis?", "in_corpus": true},
+  {"question": "What are the stages of wound healing?", "in_corpus": true},
+  {"question": "How does the kidney regulate blood pressure?", "in_corpus": true},
+  {"question": "What are the complications of untreated hypertension?", "in_corpus": true},
+  {"question": "How do vaccines produce immunity?", "in_corpus": true},
+  {"question": "Which vitamins are fat soluble?", "in_corpus": true},
+  {"question": "What are the warning signs of a stroke?", "in_corpus": true},
+  {"question": "How is asthma managed long term?", "in_corpus": true},
+
+  {"question": "What were the results of the 2023 SELECT trial of semaglutide?", "in_corpus": false},
+  {"question": "What is the current NICE guideline number for atrial fibrillation?", "in_corpus": false},
+  {"question": "How much does a course of Paxlovid cost in India?", "in_corpus": false},
+  {"question": "Which hospital in Kanpur has the shortest cardiology waiting list?", "in_corpus": false},
+  {"question": "What did the FDA approve in March 2024 for Alzheimer's disease?", "in_corpus": false},
+  {"question": "What is the CRISPR base-editing protocol for sickle cell disease?", "in_corpus": false},
+  {"question": "What is my blood pressure right now?", "in_corpus": false},
+  {"question": "Who is the current president of the American Medical Association?", "in_corpus": false}
+]

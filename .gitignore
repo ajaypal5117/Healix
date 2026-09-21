@@ -1,37 +1,19 @@
-# Secrets
 .env
-*.pem
-
-# Built index and model cache
 artifacts/
 .cache/
-*.faiss
-*.pkl
 
-# Corpus PDFs (large; see data/README.md)
+# The encyclopedia itself: 16 MB of copyrighted PDF has no business in git
+# history. The small fixture under data/fixtures/ is committed on purpose.
 data/*.pdf
-data/*.PDF
+!data/fixtures/*.pdf
 
-# Python
+eval/grounding_report.json
+eval/gold/labels.csv
+
 __pycache__/
 *.py[cod]
-*.egg-info/
-.eggs/
-build/
-dist/
 .venv/
 venv/
-env/
 .pytest_cache/
 .ruff_cache/
-.coverage
-htmlcov/
-
-# Editors and OS
-.vscode/
-.idea/
 .DS_Store
-Thumbs.db
-
-# Logs
-*.log

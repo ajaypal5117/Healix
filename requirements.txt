@@ -1,24 +1,16 @@
-# --- Web ---
-Flask==3.0.3
-gunicorn==22.0.0
-python-dotenv==1.0.1
+# Loose lower bounds rather than exact pins: exact pins break on newer Python
+# versions that have no wheel for the pinned build, and this has to install on
+# whatever interpreter is to hand.
+flask>=3.0
+gunicorn>=22.0
+python-dotenv>=1.0
+numpy>=1.26
+faiss-cpu>=1.8
+pypdf>=5.0
+openai>=1.50
 
-# --- RAG ---
-langchain==0.3.7
-langchain-core==0.3.15
-langchain-community==0.3.5
-langchain-openai==0.2.6
-langchain-huggingface==0.1.2
-langchain-text-splitters==0.3.2
-
-# --- Embeddings & vector store ---
-sentence-transformers==3.2.1
-faiss-cpu==1.9.0
-pypdf==5.1.0
-
-# --- Optional managed vector store (VECTOR_BACKEND=pinecone) ---
-pinecone==5.3.1
-langchain-pinecone==0.2.0
-
-# --- Tests ---
-pytest==8.3.3
+# Embeddings. Needs a Python version torch publishes wheels for (3.10-3.13 at
+# time of writing). Without these, set EMBEDDING_BACKEND=hashing - the pipeline
+# runs, with much worse retrieval.
+sentence-transformers>=3.0
+langchain-huggingface>=0.1

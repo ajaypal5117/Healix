@@ -1,0 +1,18 @@
+[project]
+name = "healix"
+version = "0.3.0"
+description = "Retrieval-augmented question answering over a medical encyclopedia"
+requires-python = ">=3.10"
+authors = [{ name = "Pal Ajay Ramsagar" }]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+ignore = ["E501"]

@@ -1,16 +1,28 @@
 /* Healix chat client.
-   One AJAX round trip per question; the transcript is rebuilt from the JSON the
-   API returns so the DOM never holds state the server doesn't know about. */
+   One AJAX round trip per question. The transcript is rendered from the JSON the
+   API returns, so the DOM never holds state the server doesn't know about.
+   Written without jQuery-4-removed APIs ($.trim, .focus() shorthand) so it works
+   on both 3.x and 4.x. */
 
 $(function () {
   var $transcript = $('#transcript');
   var $question = $('#question');
   var $send = $('#send');
-  var $empty = $('#empty-state');
   var pending = false;
 
   function escapeHtml(value) {
     return $('<div>').text(value == null ? '' : value).html();
+  }
+
+  function loadStats() {
+    $.getJSON('/api/stats')
+      .done(function (data) {
+        $('#stat-chunks').text(Number(data.chunks).toLocaleString());
+        $('#stat-dims').text(data.dimensions);
+      })
+      .fail(function () {
+        $('#corpus-stats').find('dd').slice(0, 2).text('n/a');
+      });
   }
 
   function autoGrow() {
@@ -25,9 +37,8 @@ $(function () {
   function renderCitations(sources) {
     if (!sources || !sources.length) return '';
     var rows = sources.map(function (source) {
-      var page = source.page ? 'p. ' + source.page : '—';
       return '<li class="citation">' +
-             '<span class="citation-page">' + escapeHtml(page) + '</span>' +
+             '<span class="citation-page">p. ' + escapeHtml(source.page) + '</span>' +
              '<span class="citation-snippet">' + escapeHtml(source.snippet) + '</span>' +
              '</li>';
     }).join('');
@@ -35,7 +46,7 @@ $(function () {
   }
 
   function appendTurn(question) {
-    $empty.remove();
+    $('#empty-state').remove();
     var id = 'turn-' + Date.now();
     $transcript.append(
       '<article class="turn" id="' + id + '">' +
@@ -50,10 +61,15 @@ $(function () {
   }
 
   function fillAnswer($turn, data) {
-    var timing = 'retrieved in ' + data.retrieval_ms + ' ms · answered in ' +
-                 (data.total_ms / 1000).toFixed(1) + ' s';
+    // A refusal is styled differently and carries no citations, because the
+    // corpus had nothing to cite.
+    var cls = data.refused ? 'turn-answer is-refusal' : 'turn-answer';
+    var timing = 'retrieved in ' + data.retrieval_ms + ' ms';
+    if (data.total_ms) {
+      timing += ' \u00b7 answered in ' + (data.total_ms / 1000).toFixed(1) + ' s';
+    }
     $turn.find('.thinking').replaceWith(
-      '<p class="turn-answer">' + escapeHtml(data.answer) + '</p>' +
+      '<p class="' + cls + '">' + escapeHtml(data.answer) + '</p>' +
       renderCitations(data.sources) +
       '<p class="timing">' + timing + '</p>'
     );
@@ -68,7 +84,7 @@ $(function () {
 
   function setPending(state) {
     pending = state;
-    $send.prop('disabled', state).text(state ? 'Asking…' : 'Ask');
+    $send.prop('disabled', state).text(state ? 'Asking\u2026' : 'Ask');
   }
 
   function submit() {
@@ -88,7 +104,7 @@ $(function () {
     })
       .done(function (data) { fillAnswer($turn, data); })
       .fail(function (xhr) {
-        var message = 'Healix could not reach the retrieval service. Try again in a moment.';
+        var message = 'Healix could not reach the service. Try again in a moment.';
         if (xhr.responseJSON && xhr.responseJSON.error) message = xhr.responseJSON.error;
         fillError($turn, message);
       })
@@ -108,11 +124,11 @@ $(function () {
   });
 
   $send.on('click', submit);
-
   $transcript.on('click', '.starter', function () {
     $question.val($(this).text());
     submit();
   });
 
+  loadStats();
   $question.trigger('focus');
 });

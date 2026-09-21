@@ -8,8 +8,10 @@ __pycache__
 .ruff_cache
 .env
 artifacts/
-data/*.pdf
-docs/
+eval/grounding_report.json
 tests/
+docs/
+data/*.pdf
+!data/fixtures/*.pdf
 *.md
 !README.md

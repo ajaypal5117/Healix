@@ -1,14 +1,22 @@
 # Corpus
 
-Place the source encyclopedia PDF in this directory, then run:
+Put the encyclopedia PDF here, then:
 
 ```bash
-python store_index.py
+python scripts/build_index.py
 ```
 
-The reference build uses *The Gale Encyclopedia of Medicine* (637 pages, 16.1 MB),
-which produces roughly 1,500 chunks at the default chunk size of 500 characters.
+The reference build uses a 637-page, 16.1 MB medical encyclopedia, which at the
+default chunk size produces roughly 1,500 chunks.
 
-PDFs are excluded from version control by `.gitignore` — the repository stays
-small and the corpus stays out of Git history. Any text-based medical PDF works;
-scanned PDFs need OCR first (e.g. `ocrmypdf input.pdf output.pdf`).
+`*.pdf` in this directory is gitignored. A 16 MB copyrighted binary does not
+belong in git history, and redistributing it is not something a public
+repository should do. `scripts/corpus_stats.py` reports the real figures from
+whatever file you supply.
+
+`fixtures/mini_encyclopedia.pdf` is different: a small generated PDF, committed
+deliberately so the tests and CI run without the real corpus. It is regenerated
+by `scripts/make_fixture.py`.
+
+Scanned PDFs need OCR first (`ocrmypdf input.pdf output.pdf`) - pypdf extracts
+no text from page images.

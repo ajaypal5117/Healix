@@ -50,13 +50,12 @@ Every figure has a command behind it. Only the last one costs money.
 | Index build time | `python scripts/build_index.py` | the PDF |
 | Embedding dimensions | `curl localhost:8080/api/stats` | a built index |
 | Retrieval latency, p50/p95/p99 | `python scripts/benchmark.py` | a built index |
+| End-to-end response time | `python scripts/benchmark.py --end-to-end` | API key |
+| Refusal and grounding rates | `python scripts/evaluate_grounding.py --ablation` | API key |
 
 On the committed fixture index with the MiniLM backend, retrieval measures
 p50 5.7 ms / p95 8.5 ms / p99 8.9 ms over 60 queries. Most of that is embedding
 the query, which is a fixed cost independent of index size.
-
-| End-to-end response time | `python scripts/benchmark.py --end-to-end` | API key |
-| Refusal and grounding rates | `python scripts/evaluate_grounding.py --ablation` | API key |
 
 Everything above the last two rows runs locally on CPU at no cost. The API
 returns `retrieval_ms`, `generation_ms` and `total_ms` on every answer, so the

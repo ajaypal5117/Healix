@@ -50,6 +50,11 @@ Every figure has a command behind it. Only the last one costs money.
 | Index build time | `python scripts/build_index.py` | the PDF |
 | Embedding dimensions | `curl localhost:8080/api/stats` | a built index |
 | Retrieval latency, p50/p95/p99 | `python scripts/benchmark.py` | a built index |
+
+On the committed fixture index with the MiniLM backend, retrieval measures
+p50 5.7 ms / p95 8.5 ms / p99 8.9 ms over 60 queries. Most of that is embedding
+the query, which is a fixed cost independent of index size.
+
 | End-to-end response time | `python scripts/benchmark.py --end-to-end` | API key |
 | Refusal and grounding rates | `python scripts/evaluate_grounding.py --ablation` | API key |
 
@@ -70,8 +75,9 @@ Regenerate it with `scripts/make_fixture.py`.
 
 ## Running without torch
 
-`sentence-transformers` needs a Python version torch publishes wheels for
-(3.10-3.13 at the time of writing). Where that isn't available:
+`sentence-transformers` needs a Python version torch publishes wheels for.
+Coverage lags each new release by a few months, so on a very recent interpreter
+the real backend may not install at all. Where that happens:
 
 ```bash
 EMBEDDING_BACKEND=hashing python scripts/build_index.py
